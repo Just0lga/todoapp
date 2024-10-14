@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Models/NoteModel.dart';
 import 'package:todoapp/pages/Note.dart';
@@ -37,7 +38,11 @@ class _NotesState extends State<Notes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Notes"),
+        backgroundColor: Colors.black,
+        title: Text(
+          "My Notes",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: foundNotes == null
@@ -58,10 +63,35 @@ class _NotesState extends State<Notes> {
                               ));
                         },
                         child: ListTile(
-                          title: Text(note.title),
-                          subtitle: Text(note.content),
-                          trailing: Text(note.time.toLocal().toString()),
-                        ));
+                            title: Text(
+                              note.title,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              note.content,
+                              maxLines: 2,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            trailing: IconButton(
+                              onPressed: () async {
+                                try {
+                                  print(note?.id);
+                                  var response = await Dio().delete(
+                                      "http://localhost:5292/api/notes/${note.id}");
+                                  if (response.statusCode == 200) {
+                                    print("Item deleted successfully");
+                                  }
+                                } catch (e) {
+                                  print("Failed to delete the item: $e");
+                                }
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.black,
+                              ),
+                            )));
                   },
                 ),
     );
