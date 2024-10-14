@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/Models/NoteModel.dart';
+import 'package:todoapp/pages/Note.dart';
 import 'package:todoapp/services/GetNotes.dart';
 
 class Notes extends StatefulWidget {
@@ -26,7 +27,6 @@ class _NotesState extends State<Notes> {
         foundNotes = notes;
       });
     } else {
-      // Handle error case (e.g., show a message or retry)
       setState(() {
         foundNotes = [];
       });
@@ -49,11 +49,19 @@ class _NotesState extends State<Notes> {
                   itemBuilder: (context, index) {
                     final note = foundNotes![index];
 
-                    return ListTile(
-                      title: Text(note.title),
-                      subtitle: Text(note.content),
-                      trailing: Text(note.time.toLocal().toString()),
-                    );
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Note(id: note.id),
+                              ));
+                        },
+                        child: ListTile(
+                          title: Text(note.title),
+                          subtitle: Text(note.content),
+                          trailing: Text(note.time.toLocal().toString()),
+                        ));
                   },
                 ),
     );

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:todoapp/Models/NoteModel.dart';
 
@@ -13,7 +12,6 @@ class Fetch_Notes {
       print('Response Status Code: ${response.statusCode}');
       print('Response Data: ${response.data}');
 
-      // Check if response is OK and is a list
       if (response.statusCode == HttpStatus.ok && response.data is List) {
         final List<dynamic> data = response.data;
         return data.map((e) => NoteModel.fromJson(e)).toList();
