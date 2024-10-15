@@ -2,31 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/pages/Notes.dart';
 
-class Note extends StatefulWidget {
-  Note(
-      {super.key,
-      required this.id,
-      required this.title,
-      required this.content});
-  int id;
-  String title;
-  String content;
+class Createnote extends StatefulWidget {
+  const Createnote({super.key});
 
   @override
-  State<Note> createState() => _NoteState();
+  State<Createnote> createState() => _CreatenoteState();
 }
 
-class _NoteState extends State<Note> {
+class _CreatenoteState extends State<Createnote> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
-  @override
-  void initState() {
-    setState(() {
-      titleController.text = widget.title;
-      contentController.text = widget.content;
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +25,9 @@ class _NoteState extends State<Note> {
                       builder: (context) => Notes(),
                     ));
                 try {
-                  var response = await Dio().put(
-                    "http://10.0.2.2:5292/api/notes/${widget.id}",
+                  var response = await Dio().post(
+                    "http://10.0.2.2:5292/api/notes",
                     data: {
-                      'id': widget.id,
                       'title': titleController.text,
                       'content': contentController.text,
                       'time': "2024-10-15T18:07:34.921Z"
@@ -53,7 +37,7 @@ class _NoteState extends State<Note> {
                   if (response.statusCode == 200) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text("Note updated successfully!"),
+                        content: Text("Note saved successfully!"),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -65,7 +49,7 @@ class _NoteState extends State<Note> {
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Failed to update the note: $e"),
+                      content: Text("Failed to save the note: $e"),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -78,7 +62,7 @@ class _NoteState extends State<Note> {
           centerTitle: true,
           backgroundColor: Colors.black,
           title: Text(
-            "My Note",
+            "New note",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           )),
       body: Padding(
@@ -133,10 +117,9 @@ class _NoteState extends State<Note> {
                         builder: (context) => Notes(),
                       ));
                   try {
-                    var response = await Dio().put(
-                      "http://10.0.2.2:5292/api/notes/${widget.id}",
+                    var response = await Dio().post(
+                      "http://10.0.2.2:5292/api/notes",
                       data: {
-                        'id': widget.id,
                         'title': titleController.text,
                         'content': contentController.text,
                         'time': "2024-10-15T18:07:34.921Z"
@@ -146,7 +129,7 @@ class _NoteState extends State<Note> {
                     if (response.statusCode == 200) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Note updated successfully!"),
+                          content: Text("Note saved successfully!"),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -159,7 +142,7 @@ class _NoteState extends State<Note> {
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text("Failed to update the note: $e"),
+                        content: Text("Failed to save the note: $e"),
                         backgroundColor: Colors.red,
                       ),
                     );
@@ -172,7 +155,7 @@ class _NoteState extends State<Note> {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(4)),
-                  child: Text("Update",
+                  child: Text("Save",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

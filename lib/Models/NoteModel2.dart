@@ -1,12 +1,12 @@
-class NoteModel2 {
+class NoteModel22 {
   String? title;
   String? content;
   String? time;
   int? id;
 
-  NoteModel2({this.title, this.content, this.time, this.id});
+  NoteModel22({this.title, this.content, this.time, this.id});
 
-  NoteModel2.fromJson(Map<String, dynamic> json) {
+  NoteModel22.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     content = json['content'];
     time = json['time'];
